@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý sản phẩm (DynamoDB)</h1>
+            <div class="user-info">
+                <span>Xin chào, <strong>
+                        <%= user.username %>
+                    </strong></span>
+                <a href="/logout" class="btn btn-secondary">Đăng xuất</a>
+            </div>
+        </div>
+
+        <div class="mb-20">
+            <a href="/products/add" class="btn btn-success">+ Thêm sản phẩm mới</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Hình ảnh</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (products.length===0) { %>
+                    <tr>
+                        <td colspan="6" class="text-center">Chưa có sản phẩm nào</td>
+                    </tr>
+                    <% } else { %>
+                        <% products.forEach(product=> { %>
+                            <tr>
+                                <td class="product-id">
+                                    <%= product.id.substring(0, 8) %>...
+                                </td>
+                                <td>
+                                    <% if (product.url_image) { %>
+                                        <img src="<%= product.url_image %>" alt="<%= product.name %>" class="product-image">
+                                    <% } else { %>
+                                        <div class="no-image">No Image</div>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= product.name %>
+                                </td>
+                                <td>
+                                    <%= product.price.toLocaleString('vi-VN') %> đ
+                                </td>
+                                <td>
+                                    <%= product.quantity %>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <a href="/products/edit/<%= product.id %>" class="btn btn-warning">Sửa</a>
+                                        <form action="/products/delete/<%= product.id %>" method="POST"
+                                            onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này?');">
+                                            <button type="submit" class="btn btn-danger">Xóa</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

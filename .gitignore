@@ -1,0 +1,35 @@
+# --- Node.js ---
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+dist/
+coverage/
+
+# --- Java (Maven & Gradle) ---
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+.gradle/
+
+# --- Các IDE phổ biến (IntelliJ, Eclipse, VS Code) ---
+# IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# --- Hệ điều hành ---
+.DS_Store
+Thumbs.db
