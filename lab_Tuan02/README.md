@@ -78,13 +78,7 @@ aws dynamodb put-item \
 ### 6. Chạy ứng dụng
 
 ```bash
-npm start
-```
-
-Hoặc để chạy với nodemon (auto-reload):
-
-```bash
-npm run dev
+node app.js
 ```
 
 Truy cập: http://localhost:3000

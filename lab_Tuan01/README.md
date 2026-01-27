@@ -36,7 +36,7 @@ Kiểm tra file `db/mysql.js` và cập nhật thông tin kết nối nếu cầ
 ### 4. Chạy ứng dụng
 
 ```bash
-npm start
+node app.js
 ```
 
 Truy cập: http://localhost:3000
