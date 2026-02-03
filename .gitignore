@@ -21,12 +21,6 @@ build/
 *.iml
 *.iws
 
-# Eclipse
-.classpath
-.project
-.settings/
-bin/
-
 # VS Code
 .vscode/
 
