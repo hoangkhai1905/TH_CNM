@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý sản phẩm (DynamoDB)</h1>
+            <div class="user-info">
+                <span>Xin chào, <strong>
+                        <%= user.username %>
+                    </strong></span>
+                <a href="/logout" class="btn btn-secondary">Đăng xuất</a>
+            </div>
+        </div>
+
+        <div class="actions-bar">
+            <% if(user && user.role === 'admin') { %>
+            <a href="/products/create" class="btn btn-success">+ Thêm sản phẩm</a>
+            <a href="/categories" class="btn btn-primary">Quản lý Danh mục</a>
+            <% } %>
+        </div>
+
+        <form action="/products" method="GET" class="filter-form">
+            <input type="text" name="q" placeholder="Tìm tên..." value="<%= filters.name || '' %>">
+            <select name="category">
+                <option value="">-- Tất cả danh mục --</option>
+                <% categories.forEach(cat => { %>
+                    <option value="<%= cat.categoryId %>" <%= filters.category == cat.categoryId ? 'selected' : '' %>><%= cat.name %></option>
+                <% }) %>
+            </select>
+            <input type="number" name="minPrice" placeholder="Giá thấp nhất" value="<%= filters.minPrice %>">
+            <input type="number" name="maxPrice" placeholder="Giá cao nhất" value="<%= filters.maxPrice %>">
+            <button type="submit" class="btn">Lọc</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Ảnh</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Kho</th>
+                    <th>Trạng thái</th>
+                    <% if(user && user.role === 'admin') { %>
+                    <th>Thao tác</th>
+                    <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (products.length===0) { %>
+                    <tr><td colspan="6" class="text-center">Không tìm thấy sản phẩm</td></tr>
+                <% } else { %>
+                    <% products.forEach(product=> { %>
+                        <tr>
+                            <td>
+                                <% if (product.url_image) { %>
+                                    <img src="<%= product.url_image %>" alt="<%= product.name %>" class="product-image">
+                                <% } else { %>
+                                    <span class="no-image">No IMG</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <strong><%= product.name %></strong>
+                            </td>
+                            <td><%= product.price.toLocaleString('vi-VN') %> đ</td>
+                            <td><%= product.quantity %></td>
+                            <td>
+                                <% if(product.inventoryStatus === 'out_of_stock') { %>
+                                    <span class="badge badge-danger">Hết hàng</span>
+                                <% } else if(product.inventoryStatus === 'low_stock') { %>
+                                    <span class="badge badge-warning">Sắp hết</span>
+                                <% } else { %>
+                                    <span class="badge badge-success">Còn hàng</span>
+                                <% } %>
+                            </td>
+                            <% if(user && user.role === 'admin') { %>
+                            <td>
+                                <a href="/products/<%= product.id %>/edit" class="btn btn-sm btn-warning">Sửa</a>
+                                <form action="/products/<%= product.id %>/delete" method="POST" style="display:inline;" onsubmit="return confirm('Xóa?');">
+                                    <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                </form>
+                            </td>
+                            <% } %>
+                        </tr>
+                    <% }); %>
+                <% } %>
+            </tbody>
+        </table>
+        
+        <% if(nextKey) { %>
+            <div class="pagination">
+                <a href="/products?nextKey=<%= nextKey %>" class="btn">Xem thêm >></a>
+            </div>
+        <% } %>
+    </div>
+</body>
+
+</html>

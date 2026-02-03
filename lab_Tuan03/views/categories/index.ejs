@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Danh mục</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Quản lý Danh mục</h1>
+            <div class="user-info">
+                <span>Xin chào, <strong>
+                        <%= user && user.username %>
+                    </strong></span>
+                <a href="/logout" class="btn btn-secondary">Đăng xuất</a>
+            </div>
+        </div>
+
+        <div class="actions-bar">
+            <a href="/products" class="btn btn-secondary">
+                << Quay lại Sản phẩm</a>
+                    <% if(user && user.role==='admin' ) { %>
+                        <a href="/categories/create" class="btn btn-success">+ Thêm Danh mục</a>
+                        <% } %>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên Danh mục</th>
+                    <th>Mô tả</th>
+                    <% if(user && user.role==='admin' ) { %>
+                        <th>Thao tác</th>
+                        <% } %>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (!categories || categories.length===0) { %>
+                    <tr>
+                        <td colspan="3" class="text-center">Không có danh mục nào</td>
+                    </tr>
+                    <% } else { %>
+                        <% categories.forEach(cat=> { %>
+                            <tr>
+                                <td><strong>
+                                        <%= cat.name %>
+                                    </strong></td>
+                                <td>
+                                    <%= cat.description %>
+                                </td>
+                                <% if(user && user.role==='admin' ) { %>
+                                    <td>
+                                        <a href="/categories/<%= cat.categoryId %>/edit"
+                                            class="btn btn-sm btn-warning">Sửa</a>
+                                        <form action="/categories/<%= cat.categoryId %>/delete" method="POST"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Bạn có chắc chắn muốn xóa danh mục này?');">
+                                            <button type="submit" class="btn btn-sm btn-danger">Xóa</button>
+                                        </form>
+                                    </td>
+                                    <% } %>
+                            </tr>
+                            <% }); %>
+                                <% } %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
