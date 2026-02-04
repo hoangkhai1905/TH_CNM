@@ -168,5 +168,39 @@ Bây giờ bạn có thể truy cập web chỉ bằng IP: `http://<PUBLIC_IP>`.
 - **Lỗi AWS**: Kiểm tra biến môi trường AWS Credentials trong file `.env`.
 - **Xem log PM2**: `pm2 logs`.
 
+## 9. Dừng và Quản lý Ứng dụng
+
+Nếu bạn muốn dừng ứng dụng hoặc gỡ bỏ nó khỏi danh sách chạy của PM2, sử dụng các lệnh sau:
+
+### Dừng ứng dụng
+Lệnh này sẽ dừng process nhưng vẫn giữ trong danh sách quản lý của PM2 (có thể start lại nhanh chóng).
+
+```bash
+pm2 stop lab03-app
+# Hoặc dừng tất cả:
+pm2 stop all
+```
+
+### Xóa ứng dụng khỏi PM2
+Lệnh này dừng và xóa hoàn toàn ứng dụng khỏi danh sách quản lý.
+
+```bash
+pm2 delete lab03-app
+# Hoặc xóa tất cả:
+pm2 delete all
+```
+
+### Các lệnh quản lý khác
+```bash
+# Xem danh sách ứng dụng đang chạy
+pm2 list
+
+# Xem chi tiết ứng dụng
+pm2 show lab03-app
+
+# Monitor tài nguyên (CPU, RAM)
+pm2 monit
+```
+
 ---
 **Hoàn tất!** Bạn đã deploy thành công ứng dụng Node.js lên EC2.

@@ -94,9 +94,15 @@
             </tbody>
         </table>
         
-        <% if(nextKey) { %>
+        <% if(nextKey) { 
+            let queryParams = `nextKey=${nextKey}`;
+            if(filters.q) queryParams += `&q=${encodeURIComponent(filters.q)}`;
+            if(filters.category) queryParams += `&category=${encodeURIComponent(filters.category)}`;
+            if(filters.minPrice) queryParams += `&minPrice=${encodeURIComponent(filters.minPrice)}`;
+            if(filters.maxPrice) queryParams += `&maxPrice=${encodeURIComponent(filters.maxPrice)}`;
+        %>
             <div class="pagination">
-                <a href="/products?nextKey=<%= nextKey %>" class="btn">Xem thêm >></a>
+                <a href="/products?<%= queryParams %>" class="btn">Xem thêm >></a>
             </div>
         <% } %>
     </div>

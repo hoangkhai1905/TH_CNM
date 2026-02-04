@@ -84,12 +84,12 @@ class ProductRepository {
             params.ExpressionAttributeValues[':categoryId'] = filters.categoryId;
         }
 
-        if (filters.minPrice !== undefined) {
+        if (filters.minPrice !== undefined && filters.minPrice !== '') {
             params.FilterExpression += ' AND price >= :minPrice';
             params.ExpressionAttributeValues[':minPrice'] = Number(filters.minPrice);
         }
 
-        if (filters.maxPrice !== undefined) {
+        if (filters.maxPrice !== undefined && filters.maxPrice !== '') {
             params.FilterExpression += ' AND price <= :maxPrice';
             params.ExpressionAttributeValues[':maxPrice'] = Number(filters.maxPrice);
         }
