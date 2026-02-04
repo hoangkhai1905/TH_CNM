@@ -95,10 +95,10 @@ class ProductRepository {
         }
 
         if (filters.name) {
-            params.FilterExpression += ' AND contains(#name, :name)';
+            params.FilterExpression += ' AND contains(#name_lower, :name_lower)';
             params.ExpressionAttributeNames = params.ExpressionAttributeNames || {};
-            params.ExpressionAttributeNames['#name'] = 'name';
-            params.ExpressionAttributeValues[':name'] = filters.name;
+            params.ExpressionAttributeNames['#name_lower'] = 'name_lower';
+            params.ExpressionAttributeValues[':name_lower'] = filters.name.toLowerCase();
         }
 
         const command = new ScanCommand(params);

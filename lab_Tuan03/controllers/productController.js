@@ -48,8 +48,9 @@ class ProductController {
 
             const productData = {
                 name: req.body.name,
-                price: req.body.price,
-                quantity: req.body.quantity,
+                name_lower: req.body.name.toLowerCase(),
+                price: Number(req.body.price),
+                quantity: Number(req.body.quantity),
                 categoryId: req.body.categoryId,
                 url_image
             };
@@ -76,8 +77,9 @@ class ProductController {
         try {
             const productData = {
                 name: req.body.name,
-                price: req.body.price,
-                quantity: req.body.quantity,
+                name_lower: req.body.name.toLowerCase(),
+                price: Number(req.body.price),
+                quantity: Number(req.body.quantity),
                 categoryId: req.body.categoryId
             };
 
