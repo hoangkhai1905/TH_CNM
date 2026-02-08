@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Products Management</h1>
+            <a href="/products/add" class="btn btn-primary">Add New Product</a>
+        </div>
+        
+        <div class="search-container" style="margin-bottom: 20px;">
+            <form action="/products" method="GET" style="display: flex; gap: 10px;">
+                <input type="text" name="q" class="form-control" placeholder="Search products..." value="<%= typeof search !== 'undefined' ? search : '' %>" style="width: 300px;">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </form>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(function(product) { %>
+                    <tr>
+                        <td>
+                            <% if(product.url_image) { %>
+                                <img src="<%= product.url_image %>" alt="<%= product.name %>" style="width: 50px; height: 50px; object-fit: cover;">
+                            <% } %>
+                        </td>
+                        <td><%= product.name %></td>
+                        <td>$<%= product.price %></td>
+                        <td>
+                            <a href="/products/edit/<%= product.id %>" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="/products/delete/<%= product.id %>" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
