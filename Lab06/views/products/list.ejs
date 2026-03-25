@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh sach san pham</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+  <div class="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-gray-800">Danh sách sản phẩm</h1>
+      <a href="/products/create" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-200 flex items-center gap-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+        Thêm sản phẩm
+      </a>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse">
+        <thead class="bg-gray-50 text-gray-700 uppercase text-xs font-semibold">
+          <tr>
+            <th class="px-6 py-3 border-b border-gray-200">Anh</th>
+            <th class="px-6 py-3 border-b border-gray-200">Ten</th>
+            <th class="px-6 py-3 border-b border-gray-200">Gia</th>
+            <th class="px-6 py-3 border-b border-gray-200">Ton kho</th>
+            <th class="px-6 py-3 border-b border-gray-200 text-right">Hanh dong</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+          <% products.forEach(p => { %>
+            <tr class="hover:bg-gray-50 transition duration-150">
+              <td class="px-6 py-4 border-b border-gray-200">
+                <% if (p.url_image) { %>
+                  <img src="<%= p.url_image %>" class="w-16 h-16 object-cover rounded shadow-sm" alt="<%= p.name %>" />
+                <% } else { %>
+                  <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">No Img</div>
+                <% } %>
+              </td>
+              <td class="px-6 py-4 border-b border-gray-200 font-medium text-gray-900"><%= p.name %></td>
+              <td class="px-6 py-4 border-b border-gray-200 text-green-600 font-semibold">$<%= p.price %></td>
+              <td class="px-6 py-4 border-b border-gray-200 text-gray-600"><%= p.unit_in_stock %></td>
+              <td class="px-6 py-4 border-b border-gray-200 text-right space-x-2">
+                <a href="/products/<%= p.productId %>" class="text-indigo-600 hover:text-indigo-900 font-medium inline-block">Chi tiết</a>
+                <a href="/products/<%= p.productId %>/edit" class="text-yellow-600 hover:text-yellow-900 font-medium inline-block">Sửa</a>
+                <form action="/products/<%= p.productId %>/delete" method="POST" class="inline-block" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                  <button type="submit" class="text-red-600 hover:text-red-900 font-medium bg-transparent border-none cursor-pointer">Xóa</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+          <% if (products.length === 0) { %>
+            <tr>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500">Chưa có sản phẩm nào.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
